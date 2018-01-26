@@ -1,6 +1,7 @@
 # Ignore everything
 /*
 /*/
+/[Ll]ibrary/
 
 # Inverse ignore some stuff
 !/Assets/
