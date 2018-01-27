@@ -10,7 +10,6 @@ public class TeleporterPart : MonoBehaviour {
     [SerializeField] private Transform transmissionEffect;
     
     private Transform thePlayer; //TODO: must be taken from a global script
-    private float moveProgress;
     private bool isReceiving;
     private ParticleSystem teleporterPartEffect;
 
@@ -30,7 +29,7 @@ public class TeleporterPart : MonoBehaviour {
     private IEnumerator Transfer() {
         transmissionEffect.position = transform.position;
         transmissionEffect.gameObject.SetActive(true);
-        moveProgress = 0;
+        float moveProgress = 0;
         otherPart.GetComponent<TeleporterPart>().SetReceiving();
         //TODO: lock player controls & make invisible
 
@@ -59,7 +58,6 @@ public class TeleporterPart : MonoBehaviour {
 
     [ContextMenu("Activate")]
     private void Activate() {
-        Debug.Log("Called");
         if (true) StartCoroutine(Transfer());
     }
 
