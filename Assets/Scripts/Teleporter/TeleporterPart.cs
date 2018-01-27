@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TeleporterPart : MonoBehaviour {
 
-    [SerializeField] private Gender teporterGender = Gender.Male;
+    [SerializeField] private Gender teleporterGender = Gender.Male;
     [SerializeField] private float effectSpeed = 0.02f;
     [Space(10)]
     [SerializeField] private Transform otherPart;
@@ -12,10 +12,19 @@ public class TeleporterPart : MonoBehaviour {
     private Transform thePlayer; //TODO: must be taken from a global script
     private float moveProgress;
     private bool isReceiving;
+    private ParticleSystem teleporterPartEffect;
 
     private void Start() {
         thePlayer = GameObject.FindGameObjectWithTag("Player").transform;
         isReceiving = false;
+        teleporterPartEffect = GetComponent<ParticleSystem>();
+        SetColor();
+        teleporterPartEffect.Play();
+    }
+
+    private void SetColor() {
+        var main = teleporterPartEffect.main;
+        main.startColor = (teleporterGender == Gender.Male) ? GameSettings.Instance.maleParticleColor : GameSettings.Instance.femaleParticleColor;
     }
 
     private IEnumerator Transfer() {
@@ -38,7 +47,10 @@ public class TeleporterPart : MonoBehaviour {
     }
 
     public void SetAccess(Gender newGender) {
-        teporterGender = newGender;
+        teleporterPartEffect.Stop();
+        teleporterGender = newGender;
+        SetColor();
+        teleporterPartEffect.Play();
     }
 
     public void SetReceiving() {
@@ -52,13 +64,13 @@ public class TeleporterPart : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.tag == "Player" && !isReceiving) {
+        if (other.tag == "Player" && !isReceiving && teleporterGender == PlayerStats.Instance.GetGender()) {
             Activate();
         }
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        if (other.tag == "Player" && teporterGender == PlayerStats.Instance.GetGender()) {
+        if (other.tag == "Player") {
             isReceiving = false;
         }
     }
