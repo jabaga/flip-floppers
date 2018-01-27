@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerBehavior))]
-public class PlayerStats : MonoBehaviour {
+public class PlayerStats : MonoBehaviour{
 
     public static PlayerStats Instance;
 

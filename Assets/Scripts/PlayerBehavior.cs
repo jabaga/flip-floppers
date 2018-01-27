@@ -236,4 +236,9 @@ public class PlayerBehavior : MonoBehaviour
         MB = MovingBehavior.Standart;
     }
 
+    public void AddRigidBody()
+    {      
+        Rigidbody gameObjectsRigidBody = gameObject.AddComponent<Rigidbody>(); // Add the rigidbody.
+        gameObjectsRigidBody.mass = 3; // Set the GO's mass to 5 via the Rigidbody.
+    }
 }
