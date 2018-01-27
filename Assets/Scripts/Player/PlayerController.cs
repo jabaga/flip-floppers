@@ -56,15 +56,32 @@ public class PlayerController : MonoBehaviour {
             }
             if (Input.GetKeyDown(KeyCode.E)) {
                 anim.SetBool("Moving", true);
+                StopChainMovement(true);
 
             }
             if (Input.GetKeyUp(KeyCode.E)) {
                 anim.SetBool("Moving", false);
-
+                StopChainMovement(false);
             }
 
         }
     }
+
+    private void StopChainMovement(bool toStop) {
+        if (toStop) {
+            transform.parent = null;
+            PlayerChainSnapExtra.Instance.tempStop = true;
+            rigb.bodyType = RigidbodyType2D.Dynamic;
+            rigb.constraints = RigidbodyConstraints2D.FreezeAll;
+        } else {
+            if (PlayerChainSnapExtra.Instance.GetNewParent() == null) Debug.LogError("No archivedChain");
+            else {
+                transform.parent = PlayerChainSnapExtra.Instance.GetNewParent().transform;
+                PlayerChainSnapExtra.Instance.tempStop = true;
+            }
+        }
+    }
+
 
     public void ClearFlags() {
         flagRight = false;
@@ -115,19 +132,21 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D coll) {
-        if (coll.gameObject.tag == "Segment" && !onSegment) {
-            rigb.velocity = Vector2.zero;
-            rigb.bodyType = RigidbodyType2D.Kinematic;
-            canMove = false;
-            canJump = false;
-            onSegment = true;
-            transform.parent = coll.transform;
-            transform.localPosition = new Vector3(2.8f, 0, 0);
-            transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
-            sprend.flipY = coll.GetComponentInParent<ChainMover>().IsReversed();
+        if (coll.gameObject.tag == "Segment") {
+            if (!onSegment) {
+                rigb.velocity = Vector2.zero;
+                rigb.bodyType = RigidbodyType2D.Kinematic;
+                canMove = false;
+                canJump = false;
+                onSegment = true;
+                transform.parent = coll.transform;
+                transform.localPosition = new Vector3(2.8f, 0, 0);
+                transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
+                sprend.flipY = coll.GetComponentInParent<ChainMover>().IsReversed();
 
-            anim.SetTrigger("OnSegment");
-            anim.SetBool("Moving", false);
+                anim.SetTrigger("OnSegment");
+                anim.SetBool("Moving", false);
+            }
         }
     }
 
@@ -139,6 +158,7 @@ public class PlayerController : MonoBehaviour {
         transform.parent = null;
         transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         onSegment = false;
+        PlayerChainSnapExtra.Instance.tempStop = false;
         ClearFlags();
     }
 }
