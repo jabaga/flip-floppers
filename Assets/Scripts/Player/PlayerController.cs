@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
+
+    public static PlayerController Instance;
+
+    public bool canMove = true;
+    public bool onSegment = false;
+
     [SerializeField] private float speed = 6f;
     [SerializeField] private int jumpForce = 800;
     [SerializeField] private Transform snapPos;
@@ -8,15 +14,24 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D rigb;
     private float horizInput;
     private bool flagLeft, flagRight, flagJump, canJump;
-    private bool canMove = true;
-    private bool onSegment = false;
 
-    private Animator Anim;
-    
-	private void Start () {
+    private Animator anim;
+    private SpriteRenderer sprend;
+
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        } else if (Instance != this) {
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start () {
         rigb = GetComponent<Rigidbody2D>();
-        Anim = GetComponent<Animator>();
-	}
+        anim = GetComponent<Animator>();
+        sprend = GetComponent<SpriteRenderer>();
+        sprend.flipY = false;
+    }
 
     private void Update() {
         if (canMove)
@@ -38,25 +53,29 @@ public class PlayerController : MonoBehaviour {
                 flagJump = true;
             }
 
-            Debug.Log("HERE");
-
             if (horizInput != 0 && rigb.velocity.y == 0)
-                Anim.SetTrigger("Moving");
+                anim.SetTrigger("Moving");
             else if (horizInput == 0 && rigb.velocity.y == 0)
-                Anim.SetTrigger("Idle");
+                anim.SetTrigger("Idle");
             else if (rigb.velocity.y != 0)
-                Anim.SetTrigger("Jumping");
+                anim.SetTrigger("Jumping");
         }
         else if (onSegment)
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                transform.localPosition = new Vector3(-transform.localPosition.x, transform.localPosition.y, 0);
+                transform.localPosition = new Vector3(-transform.localPosition.x, 0, 0);
                 transform.localEulerAngles += new Vector3(0, 180, 0);
             }
 
-            Anim.SetTrigger("OnSegment");
+            anim.SetTrigger("OnSegment");
         }
+    }
+
+    public void ClearFlags() {
+        flagRight = false;
+        flagLeft = false;
+        flagJump = false;
     }
 
     private void FixedUpdate() {
@@ -69,9 +88,7 @@ public class PlayerController : MonoBehaviour {
                 rigb.velocity = Vector2.zero;
                 rigb.AddForce(new Vector2(0f, jumpForce));
             }
-        } else {
-
-        }
+        } 
     }
 
     private void OnCollisionEnter2D(Collision2D coll) {
@@ -81,7 +98,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    void OnCollisionExit2D(Collision2D coll) {
+    private void OnCollisionExit2D(Collision2D coll) {
         if (coll.gameObject.tag == "Ground") {
             canJump = false;
             flagJump = false;
@@ -90,14 +107,15 @@ public class PlayerController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D coll) {
         if (coll.gameObject.tag == "Segment" && !onSegment) {
+            rigb.velocity = Vector2.zero;
+            rigb.bodyType = RigidbodyType2D.Kinematic;
             canMove = false;
+            canJump = false;
             onSegment = true;
             transform.parent = coll.transform;
-            rigb.velocity = Vector2.zero;
-            Debug.Log("HIT");
-            rigb.bodyType = RigidbodyType2D.Kinematic;
+            transform.localPosition = new Vector3(2.8f, 0, 0);
+            transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
+            sprend.flipY = coll.GetComponentInParent<ChainMover>().IsReversed();
         }
     }
-
-
 }

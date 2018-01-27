@@ -8,13 +8,11 @@ public class TeleporterPart : MonoBehaviour {
     [Space(10)]
     [SerializeField] private Transform otherPart;
     [SerializeField] private Transform transmissionEffect;
-    
-    private Transform thePlayer; //TODO: must be taken from a global script
+
     private bool isReceiving;
     private ParticleSystem teleporterPartEffect;
 
     private void Start() {
-        thePlayer = GameObject.FindGameObjectWithTag("Player").transform;
         isReceiving = false;
         teleporterPartEffect = GetComponent<ParticleSystem>();
         SetColor();
@@ -31,18 +29,26 @@ public class TeleporterPart : MonoBehaviour {
         transmissionEffect.gameObject.SetActive(true);
         float moveProgress = 0;
         otherPart.GetComponent<TeleporterPart>().SetReceiving();
-        //TODO: lock player controls & make invisible
+        PlayerController.Instance.GetComponent<Collider2D>().enabled = false;
+        PlayerController.Instance.GetComponent<SpriteRenderer>().flipY = false;
+        PlayerController.Instance.canMove = false;
+        PlayerController.Instance.transform.parent = null;
+        PlayerController.Instance.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        PlayerController.Instance.onSegment = false;
+        PlayerController.Instance.ClearFlags();
 
         while (moveProgress < 1f) {
             Vector3 newPos = Vector3.Lerp(transform.position, otherPart.position, moveProgress);
             transmissionEffect.position = newPos;
-            thePlayer.position = newPos;
+            PlayerStats.Instance.transform.position = newPos;
             moveProgress += effectSpeed;
             yield return new WaitForSeconds(effectSpeed/2);
         }
 
+        PlayerController.Instance.GetComponent<Collider2D>().enabled = true;
+        PlayerController.Instance.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+
         transmissionEffect.gameObject.SetActive(false);
-        //TODO: unlock player controls
     }
 
     public void SetAccess(Gender newGender) {
@@ -62,7 +68,9 @@ public class TeleporterPart : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.tag == "Player" && !isReceiving && teleporterGender == PlayerStats.Instance.GetGender()) {
+        if (other.tag == "Player"
+            && !isReceiving
+            && teleporterGender == PlayerStats.Instance.GetGender()) {
             Activate();
         }
     }

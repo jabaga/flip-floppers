@@ -20,7 +20,7 @@ public class GameStateController : MonoBehaviour {
 
     public void GameOver(bool hasWon) {
         isGameOver = true;
-        //lock player controls
+        PlayerController.Instance.canMove = false;
         if (hasWon) StartCoroutine(WinGame());
         else StartCoroutine(LoseGame());
     }

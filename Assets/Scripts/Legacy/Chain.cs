@@ -49,7 +49,7 @@ public class Chain : MonoBehaviour {
          */
         for(int i=0; i < wheelsParent.transform.childCount; i++)
         {
-            WheelMover wheelComponent = wheelsParent.transform.GetChild(i).gameObject.GetComponent<WheelMover>();
+            WheelMover wheelComponent = wheelsParent.transform.GetChild(i).GetComponent<WheelMover>();
             if(wheelComponent == null)
             {
                 wheelComponent = wheelsParent.transform.GetChild(i).gameObject.AddComponent<WheelMover>();
