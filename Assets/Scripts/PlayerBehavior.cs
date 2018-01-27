@@ -4,11 +4,21 @@ using UnityEngine;
 public enum MovingBehavior
 {
     Standart,
-    Wheel
+    Wheel,
+    Dead
+}
+
+public enum SideBehavior
+{
+    StartSide,
+    OtherSide
 }
 
 public class PlayerBehavior : MonoBehaviour
 {
+    public Transform StartSide;
+    public Transform OtherSide;
+
     public float speed = 6f;
     public float jumpForce = 400f;
 
@@ -22,12 +32,14 @@ public class PlayerBehavior : MonoBehaviour
 
     public MovingBehavior MB;
 
+    public SideBehavior SB;
+
     private void Awake()
     {
-        MB = MovingBehavior.Standart;
-        
-
+        MB = MovingBehavior.Standart;        
         RB2D = GetComponent<Rigidbody2D>();
+
+        SB = SideBehavior.StartSide;
     }
 
     private void OnCollisionEnter2D(Collision2D coll)
@@ -42,19 +54,25 @@ public class PlayerBehavior : MonoBehaviour
             GameObject other = coll.gameObject;
 
             MB = MovingBehavior.Wheel;
-            Debug.Log("On a wheel");
+            //Debug.Log("On a wheel");
             //RB2D.gravityScale = 0;
             //coll.transform.parent = gameObject.transform;
 
-            Debug.Log("OTHER" + other.name);
+            //Debug.Log("OTHER" + other.name);
             //gameObject.transform = coll.transform.parent;
 
             //other.transform.parent = gameObject.transform;
 
             Destroy(transform.GetComponent<Rigidbody2D>());
+            //RB2D.bodyType = RigidbodyType2D.Static;
             transform.rotation = Quaternion.Euler(0, 0, 270);
             gameObject.transform.parent = other.transform;
 
+        }
+
+        if (coll.gameObject.tag == "Enemy")
+        {
+            Destroy(this.gameObject);
         }
     }
 
@@ -94,9 +112,9 @@ public class PlayerBehavior : MonoBehaviour
         {
             if (canJump)
             {
-                Debug.Log("JUMP");
+                //Debug.Log("JUMP");
 
-                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
                 {
                     //RB2D.velocity = new Vector2(speed, RB2D.velocity.y);
                     RB2D.velocity = Vector2.zero;
@@ -109,8 +127,34 @@ public class PlayerBehavior : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                transform.position = new Vector3(-transform.position.x,
-                    transform.position.y, transform.position.z);
+                if (SB == SideBehavior.StartSide)
+                {
+                    transform.position = OtherSide.transform.position;
+                }
+                else if (SB == SideBehavior.OtherSide)
+                {
+                    transform.position = StartSide.transform.position;
+                }
+            }
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (SB == SideBehavior.StartSide)
+            {
+                SB = SideBehavior.OtherSide;
+
+                transform.position = OtherSide.transform.position;
+                transform.GetComponent<SpriteRenderer>().flipX = true;
+            }
+            else if (SB == SideBehavior.OtherSide)
+            {
+                SB = SideBehavior.StartSide;
+
+                transform.position = StartSide.transform.position;
+                transform.GetComponent<SpriteRenderer>().flipX = false;
+
             }
         }
     }
@@ -143,5 +187,10 @@ public class PlayerBehavior : MonoBehaviour
         
     }
 
+    [ContextMenu("KILL")]
+    public void DisableInput()
+    {
+        MB = MovingBehavior.Dead;
+    }
 
 }
