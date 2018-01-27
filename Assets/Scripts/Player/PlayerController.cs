@@ -36,16 +36,22 @@ public class PlayerController : MonoBehaviour {
             }
             if (canJump && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))) {
                 flagJump = true;
+                Anim.SetTrigger("Jumping");
+                print("Jumping");
             }
 
-            Debug.Log("HERE");
+
 
             if (horizInput != 0 && rigb.velocity.y == 0)
+            {
                 Anim.SetTrigger("Moving");
-            else if (horizInput == 0 && rigb.velocity.y == 0)
-                Anim.SetTrigger("Idle");
-            else if (rigb.velocity.y != 0)
-                Anim.SetTrigger("Jumping");
+                print("Moving");
+            }
+            else if (horizInput == 0 && rigb.velocity.y == 0 && Anim.GetCurrentAnimatorStateInfo(0).IsName("Man Standing Animation") == false)
+            {
+                Anim.SetTrigger("Standing");
+                print("Standing");
+            }
         }
         else if (onSegment)
         {
@@ -55,7 +61,6 @@ public class PlayerController : MonoBehaviour {
                 transform.localEulerAngles += new Vector3(0, 180, 0);
             }
 
-            Anim.SetTrigger("OnSegment");
         }
     }
 
@@ -72,12 +77,36 @@ public class PlayerController : MonoBehaviour {
         } else {
 
         }
+
+        if(Input.GetKey(KeyCode.B))
+        {
+            Anim.SetTrigger("BackwardsStart");
+        } else
+        {
+            if(Anim.GetCurrentAnimatorStateInfo(0).IsName("Man Backwards Animation"))
+            {
+                Anim.SetTrigger("BackwardsStop");
+            }
+        }
+
+        /*if (Input.GetKeyDown(KeyCode.B))
+        {
+            Anim.SetTrigger("BackwardsStart");
+            print("BackwardsStart");
+        }
+        if (Input.GetKeyUp(KeyCode.B))
+        {
+            Anim.SetTrigger("BackwardsStop");
+            print("BackwardsStop");
+        }*/
     }
 
     private void OnCollisionEnter2D(Collision2D coll) {
         if (coll.gameObject.tag == "Ground") {
             canJump = true;
             canMove = true;
+            Anim.SetTrigger("HitPlatform");
+            print("HitPlatform");
         }
     }
 
@@ -94,8 +123,10 @@ public class PlayerController : MonoBehaviour {
             onSegment = true;
             transform.parent = coll.transform;
             rigb.velocity = Vector2.zero;
-            Debug.Log("HIT");
             rigb.bodyType = RigidbodyType2D.Kinematic;
+
+            Anim.SetTrigger("OnSegment");
+            print("OnSegment");
         }
     }
 
