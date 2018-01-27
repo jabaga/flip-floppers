@@ -74,4 +74,12 @@ public class TeleporterPart : MonoBehaviour {
             isReceiving = false;
         }
     }
+
+    private void OnDestroy() {
+        StopAllCoroutines();
+    }
+
+    private void OnDisable() {
+        StopAllCoroutines();
+    }
 }
