@@ -65,14 +65,43 @@ public class PlayerBehavior : MonoBehaviour
 
             Destroy(transform.GetComponent<Rigidbody2D>());
             //RB2D.bodyType = RigidbodyType2D.Static;
-            transform.rotation = Quaternion.Euler(0, 0, 270);
+            //transform.rotation = Quaternion.Euler(0, 0, 270);
             gameObject.transform.parent = other.transform;
 
+            //transform.rotation = Quaternion.Euler(0, 0, 90);
+
+            Vector3 dir = transform.parent.position - transform.position;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
 
         if (coll.gameObject.tag == "Enemy")
         {
             Destroy(this.gameObject);
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D coll)
+    {
+        if (coll.gameObject.tag == "Wheels")
+        {
+            //Debug.Log("On a wheel");
+            //RB2D.gravityScale = 0;
+            //coll.transform.parent = gameObject.transform;
+
+            //Debug.Log("OTHER" + other.name);
+            //gameObject.transform = coll.transform.parent;
+
+            //other.transform.parent = gameObject.transform;
+
+            //RB2D.bodyType = RigidbodyType2D.Static;
+            //transform.rotation = Quaternion.Euler(0, 0, 270);
+
+            //transform.rotation = Quaternion.Euler(0, 0, -110);
+
+            Vector3 dir = transform.parent.position - transform.position;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
     }
 
