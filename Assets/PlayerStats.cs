@@ -7,7 +7,8 @@ public class PlayerStats : MonoBehaviour {
 
     [SerializeField] private Animator anim;
 
-    private Gender playerGender;
+    //TODO: make private
+    public Gender playerGender = Gender.Male;
 
     public void SwitchGender() {
         playerGender = playerGender.SwitchGender();
