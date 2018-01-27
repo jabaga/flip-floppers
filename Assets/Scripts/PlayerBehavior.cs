@@ -193,4 +193,9 @@ public class PlayerBehavior : MonoBehaviour
         MB = MovingBehavior.Dead;
     }
 
+    public void EnableInput()
+    {
+        MB = MovingBehavior.Standart;
+    }
+
 }
