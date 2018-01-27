@@ -15,6 +15,7 @@ public class ChainMover : MonoBehaviour {
     private void Start() {
         if (!(segments.Count > 0)) return;
 
+        chainSpeed = -chainSpeed;
         StartCoroutine(MoveChain());
     }
 
@@ -56,8 +57,8 @@ public class ChainMover : MonoBehaviour {
                 segmentProgress--;
             }
 
-            if (segmentProgress >= segments.Count) segmentProgress = 0;
-            else if (segmentProgress < 0) segmentProgress = segments.Count;
+            if (segmentProgress > segments.Count - 1) segmentProgress = 0;
+            else if (segmentProgress < 0) segmentProgress = segments.Count - 1;
 
             Move(moveProgress);
         }
