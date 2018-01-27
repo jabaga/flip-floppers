@@ -51,6 +51,9 @@ public class PlayerBehavior : MonoBehaviour
 
         if (coll.gameObject.tag == "Wheels")
         {
+            if (MB == MovingBehavior.Wheel)
+                return;
+
             GameObject other = coll.gameObject;
 
             MB = MovingBehavior.Wheel;
@@ -68,11 +71,13 @@ public class PlayerBehavior : MonoBehaviour
             //transform.rotation = Quaternion.Euler(0, 0, 270);
             gameObject.transform.parent = other.transform;
 
-            //transform.rotation = Quaternion.Euler(0, 0, 90);
+            var objectRotation = transform.parent.eulerAngles.z;
 
-            Vector3 dir = transform.parent.position - transform.position;
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            transform.rotation = Quaternion.Euler(0, 0, objectRotation -90);
+
+            //Vector3 dir = transform.parent.position - transform.position;
+            //float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            //transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
 
         if (coll.gameObject.tag == "Enemy")
@@ -165,6 +170,10 @@ public class PlayerBehavior : MonoBehaviour
                     transform.position = StartSide.transform.position;
                 }
             }
+            var objectRotation = transform.parent.eulerAngles.z;
+
+            transform.rotation = Quaternion.Euler(0, 0, objectRotation - 90);
+
         }
 
 
