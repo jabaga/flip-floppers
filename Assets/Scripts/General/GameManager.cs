@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour {
     public void Quit() {
         Application.Quit();
     }
-
+    /*
     private void OnApplicationFocus(bool focus) {
         if (focus) {
             Time.timeScale = 1;
@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour {
             Time.timeScale = 0;
         }
     }
+    */
 }
 
 [System.Flags]

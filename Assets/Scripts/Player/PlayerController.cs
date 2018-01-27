@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody2D rigb;
     private float horizInput;
-    private bool flagLeft, flagRight, flagJump, canJump;
+    private bool flagLeft, flagRight, flagJump, canJump, movingLeft;
 
     private Animator anim;
     private SpriteRenderer sprend;
@@ -34,18 +34,14 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Update() {
-        if (canMove)
-        {
+        if (canMove) {
             horizInput = Input.GetAxisRaw("Horizontal");
 
-            if (horizInput > 0)
-            {
+            if (horizInput > 0) {
                 flagRight = true;
-            } else if (horizInput < 0)
-            {
+            } else if (horizInput < 0) {
                 flagLeft = true;
-            } else if (horizInput == 0)
-            {
+            } else if (horizInput == 0) {
                 flagLeft = false;
                 flagRight = false;
             }
@@ -53,25 +49,20 @@ public class PlayerController : MonoBehaviour {
                 flagJump = true;
                 anim.SetTrigger("Jumping");
             }
-
-            if (horizInput != 0 && rigb.velocity.y == 0)
-            {
-                anim.SetTrigger("Moving");
-            }
-            else if (horizInput == 0 && rigb.velocity.y == 0 && anim.GetCurrentAnimatorStateInfo(0).IsName("Man Standing Animation") == false)
-            {
-                anim.SetTrigger("Standing");
-            }
-
-        }
-        else if (onSegment)
-        {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
+        } else if (onSegment) {
+            if (Input.GetKeyDown(KeyCode.R)) {
                 transform.localPosition = new Vector3(-transform.localPosition.x, 0, 0);
                 transform.localEulerAngles += new Vector3(0, 180, 0);
             }
-            
+            if (Input.GetKeyDown(KeyCode.E)) {
+                anim.SetBool("Moving", true);
+
+            }
+            if (Input.GetKeyUp(KeyCode.E)) {
+                anim.SetBool("Moving", false);
+
+            }
+
         }
     }
 
@@ -83,25 +74,27 @@ public class PlayerController : MonoBehaviour {
 
     private void FixedUpdate() {
         if (!onSegment) {
-            if (flagRight) rigb.velocity = new Vector2(speed, rigb.velocity.y);
-            else if (flagLeft) rigb.velocity = new Vector2(-speed, rigb.velocity.y);
-            else rigb.velocity = new Vector2(0, rigb.velocity.y);
+            if (flagRight) {
+                rigb.velocity = new Vector2(speed, rigb.velocity.y);
+                movingLeft = false;
+                anim.SetBool("Moving", true);
+            } else if (flagLeft) {
+                rigb.velocity = new Vector2(-speed, rigb.velocity.y);
+                movingLeft = true;
+                anim.SetBool("Moving", true);
+            } else {
+                rigb.velocity = new Vector2(0, rigb.velocity.y);
+                movingLeft = false;
+                anim.SetBool("Moving", false);
+            }
+
+            if (movingLeft != sprend.flipX) {
+                sprend.flipX = movingLeft; 
+            }
 
             if (flagJump) {
                 rigb.velocity = Vector2.zero;
                 rigb.AddForce(new Vector2(0f, jumpForce));
-            }
-        }
-
-        if (Input.GetKey(KeyCode.B))
-        {
-            anim.SetTrigger("BackwardsStart");
-        }
-        else
-        {
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Man Backwards Animation"))
-            {
-                anim.SetTrigger("BackwardsStop");
             }
         }
     }
@@ -110,7 +103,7 @@ public class PlayerController : MonoBehaviour {
         if (coll.gameObject.tag == "Ground") {
             canJump = true;
             canMove = true;
-            anim.SetTrigger("HitPlatform");
+            anim.SetTrigger("OffSegment");
         }
     }
 
@@ -135,5 +128,16 @@ public class PlayerController : MonoBehaviour {
 
             anim.SetTrigger("OnSegment");
         }
+    }
+
+    public void OnTeleportationStart() {
+        anim.SetTrigger("OffSegment");
+        GetComponent<Collider2D>().enabled = false;
+        GetComponent<SpriteRenderer>().flipY = false;
+        canMove = false;
+        transform.parent = null;
+        transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        onSegment = false;
+        ClearFlags();
     }
 }

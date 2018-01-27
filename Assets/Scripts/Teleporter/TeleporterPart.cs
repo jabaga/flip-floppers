@@ -29,13 +29,7 @@ public class TeleporterPart : MonoBehaviour {
         transmissionEffect.gameObject.SetActive(true);
         float moveProgress = 0;
         otherPart.GetComponent<TeleporterPart>().SetReceiving();
-        PlayerController.Instance.GetComponent<Collider2D>().enabled = false;
-        PlayerController.Instance.GetComponent<SpriteRenderer>().flipY = false;
-        PlayerController.Instance.canMove = false;
-        PlayerController.Instance.transform.parent = null;
-        PlayerController.Instance.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
-        PlayerController.Instance.onSegment = false;
-        PlayerController.Instance.ClearFlags();
+        PlayerController.Instance.OnTeleportationStart();
 
         while (moveProgress < 1f) {
             Vector3 newPos = Vector3.Lerp(transform.position, otherPart.position, moveProgress);
