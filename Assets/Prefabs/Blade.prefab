@@ -99,8 +99,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae5cf771642760e4d8f31a850c4326ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: {x: 1.5, y: 0}
-  reverseAfter: 3
+  activeBlade: 1
+  movement: {x: 1, y: 0}
+  speed: 0.01
+  rigidness: 0.01
 --- !u!212 &212466449465056854
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -143,5 +145,5 @@ SpriteRenderer:
   m_Size: {x: 1.75, y: 0.71}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
