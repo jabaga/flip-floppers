@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 212392855798143032}
   - component: {fileID: 61389838278250262}
   - component: {fileID: 210182244462922028}
+  - component: {fileID: 114283525920617416}
   m_Layer: 0
   m_Name: Gender Changer Dick
   m_TagString: Untagged
@@ -83,7 +84,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1883239310953644}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.35, y: 0.16, z: 0}
+  m_LocalPosition: {x: -7.761646, y: -1.643066, z: 0}
   m_LocalScale: {x: 0.45, y: 0.35, z: 1}
   m_Children:
   - {fileID: 4898463614856236}
@@ -129,6 +130,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.47, y: 2.26}
   m_EdgeRadius: 0
+--- !u!114 &114283525920617416
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1883239310953644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa4ea9df4e341714b8240a1a66fb733e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 1
 --- !u!198 &198375184255436214
 ParticleSystem:
   m_ObjectHideFlags: 1

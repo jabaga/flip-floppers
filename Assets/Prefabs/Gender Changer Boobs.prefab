@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212450724740411634}
   - component: {fileID: 61470077552107312}
   - component: {fileID: 210324824266827466}
+  - component: {fileID: 114207838533903810}
   m_Layer: 0
   m_Name: Gender Changer Boobs
   m_TagString: Untagged
@@ -96,7 +97,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1013866261138226}
   m_LocalRotation: {x: 0, y: 0, z: 0.12784357, w: 0.99179435}
-  m_LocalPosition: {x: -3.03, y: 0.31, z: 0}
+  m_LocalPosition: {x: -9.752208, y: -2.230919, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children:
   - {fileID: 4550359561441798}
@@ -129,6 +130,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.22, y: 1.38}
   m_EdgeRadius: 0
+--- !u!114 &114207838533903810
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1013866261138226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa4ea9df4e341714b8240a1a66fb733e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gender: 2
 --- !u!198 &198777341723669268
 ParticleSystem:
   m_ObjectHideFlags: 1
