@@ -24,7 +24,6 @@ public class Blade : MonoBehaviour {
             moveProgress = 0;
             while (moveProgress < 1f) {
                 if (!activeBlade) break;
-                Debug.Log(moveProgress);
                 transform.position = Vector2.Lerp(initPos, endPos, moveProgress);
                 yield return new WaitForSeconds(rigidness);
                 moveProgress += (speed);
