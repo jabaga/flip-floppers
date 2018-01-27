@@ -59,7 +59,7 @@ public class Chain : MonoBehaviour {
             if (wheelComponent.reverse == true)
                 velocity = -speed;
 
-            wheelComponent.SetVelocity(velocity);
+            //wheelComponent.SetVelocity(velocity);
         }
     }
 }

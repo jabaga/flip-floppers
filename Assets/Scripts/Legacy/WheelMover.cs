@@ -5,22 +5,16 @@ using UnityEngine;
 public class WheelMover : MonoBehaviour {
 
     public bool reverse;
-
-    float velocity;
-    Rigidbody2D body;
-
-    private void Start()
-    {
-        body = GetComponent<Rigidbody2D>();
-    }
+    public float speed;
 
     void FixedUpdate()
     {
-        body.angularVelocity = velocity;
-    }
+        Vector3 rotation = transform.rotation.eulerAngles;
+        if(reverse == true)
+            rotation.z -= speed / 10;
+        else
+            rotation.z += speed / 10;
 
-    public void SetVelocity(float velocity)
-    {
-        this.velocity = velocity;
+        transform.rotation = Quaternion.Euler(rotation);
     }
 }
