@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2718788a74969964ea5b0c62ad535e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
+  genderSwitchParticle: {fileID: 0}
 --- !u!114 &114077376595321550
 MonoBehaviour:
   m_ObjectHideFlags: 1
