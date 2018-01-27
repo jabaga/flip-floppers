@@ -51,14 +51,18 @@ public class PlayerController : MonoBehaviour {
             }
             if (canJump && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))) {
                 flagJump = true;
+                anim.SetTrigger("Jumping");
             }
 
             if (horizInput != 0 && rigb.velocity.y == 0)
+            {
                 anim.SetTrigger("Moving");
-            else if (horizInput == 0 && rigb.velocity.y == 0)
-                anim.SetTrigger("Idle");
-            else if (rigb.velocity.y != 0)
-                anim.SetTrigger("Jumping");
+            }
+            else if (horizInput == 0 && rigb.velocity.y == 0 && anim.GetCurrentAnimatorStateInfo(0).IsName("Man Standing Animation") == false)
+            {
+                anim.SetTrigger("Standing");
+            }
+
         }
         else if (onSegment)
         {
@@ -67,8 +71,7 @@ public class PlayerController : MonoBehaviour {
                 transform.localPosition = new Vector3(-transform.localPosition.x, 0, 0);
                 transform.localEulerAngles += new Vector3(0, 180, 0);
             }
-
-            anim.SetTrigger("OnSegment");
+            
         }
     }
 
@@ -88,13 +91,26 @@ public class PlayerController : MonoBehaviour {
                 rigb.velocity = Vector2.zero;
                 rigb.AddForce(new Vector2(0f, jumpForce));
             }
-        } 
+        }
+
+        if (Input.GetKey(KeyCode.B))
+        {
+            anim.SetTrigger("BackwardsStart");
+        }
+        else
+        {
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Man Backwards Animation"))
+            {
+                anim.SetTrigger("BackwardsStop");
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D coll) {
         if (coll.gameObject.tag == "Ground") {
             canJump = true;
             canMove = true;
+            anim.SetTrigger("HitPlatform");
         }
     }
 
@@ -116,6 +132,8 @@ public class PlayerController : MonoBehaviour {
             transform.localPosition = new Vector3(2.8f, 0, 0);
             transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
             sprend.flipY = coll.GetComponentInParent<ChainMover>().IsReversed();
+
+            anim.SetTrigger("OnSegment");
         }
     }
 }
