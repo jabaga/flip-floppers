@@ -127,6 +127,7 @@ public class PlayerController : MonoBehaviour {
             sprend.flipY = coll.GetComponentInParent<ChainMover>().IsReversed();
 
             anim.SetTrigger("OnSegment");
+            anim.SetBool("Moving", false);
         }
     }
 
