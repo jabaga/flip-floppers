@@ -3,36 +3,63 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Chain : MonoBehaviour {
+    
+    public float chainGravityScale = 0;
+    public float speed = 100;
+    
+    Vector2 anchor = new Vector2(0, 0);
 
-    //new Vector2(-0.44f, 0)
-    public Vector2 anchor;
+    void Start () {
+        GameObject wheelsParent = gameObject.transform.Find("Wheels").gameObject;
+        GameObject chainParent = gameObject.transform.Find("Chain").gameObject;
 
-	void Start () {
-        Rigidbody2D[] bodies = GetComponentsInChildren<Rigidbody2D>();
+        if (wheelsParent == null || chainParent == null)
+            Debug.LogError("No wheels or chain found!");
 
-        for(int i=0; i<bodies.Length; i++)
+        /**
+         * CHAIN CONFIGURATION
+         */
+        Rigidbody2D[] chainBodies = chainParent.GetComponentsInChildren<Rigidbody2D>();
+        for(int i=0; i<chainBodies.Length; i++)
         {
             Rigidbody2D bodyToConnect = null;
             if(i == 0)
             {
-                bodyToConnect = bodies[bodies.Length - 1];
+                bodyToConnect = chainBodies[chainBodies.Length - 1];
             } else
             {
-                bodyToConnect = bodies[i - 1];
+                bodyToConnect = chainBodies[i - 1];
             }
-
-            //print(bodies[i].gameObject.name +" will joint to "+ bodyToConnect.gameObject.name);
-
-            HingeJoint2D joint = bodies[i].gameObject.AddComponent<HingeJoint2D>();
+            
+            // joint body
+            HingeJoint2D joint = chainBodies[i].gameObject.AddComponent<HingeJoint2D>();
             joint.connectedBody = bodyToConnect;
             joint.anchor = anchor;
 
-            //print(Vector3.Distance(bodies[i].gameObject.transform.position, bodyToConnect.gameObject.transform.position) +" "+ Helper.DegreesBetweenObjects(bodies[i].gameObject, bodyToConnect.gameObject));
+            // make sure it is solid
+            chainBodies[i].GetComponent<Collider2D>().isTrigger = false;
             
+            // make sure it is solid
+            chainBodies[i].GetComponent<Rigidbody2D>().gravityScale = chainGravityScale;
         }
-	}
-	
-	void Update () {
-		
-	}
+
+
+        /**
+         * WHEELS CONFIGURATION
+         */
+        for(int i=0; i < wheelsParent.transform.childCount; i++)
+        {
+            WheelMover wheelComponent = wheelsParent.transform.GetChild(i).gameObject.GetComponent<WheelMover>();
+            if(wheelComponent == null)
+            {
+                wheelComponent = wheelsParent.transform.GetChild(i).gameObject.AddComponent<WheelMover>();
+            }
+
+            float velocity = speed;
+            if (wheelComponent.reverse == true)
+                velocity = -speed;
+
+            wheelComponent.SetVelocity(velocity);
+        }
+    }
 }

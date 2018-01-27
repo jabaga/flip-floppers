@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CircleMover : MonoBehaviour {
+public class WheelMover : MonoBehaviour {
 
-    public float velocity;
+    public bool reverse;
 
+    float velocity;
     Rigidbody2D body;
 
     private void Start()
@@ -15,7 +16,11 @@ public class CircleMover : MonoBehaviour {
 
     void FixedUpdate()
     {
-       // body.AddTorque(10);
         body.angularVelocity = velocity;
+    }
+
+    public void SetVelocity(float velocity)
+    {
+        this.velocity = velocity;
     }
 }
