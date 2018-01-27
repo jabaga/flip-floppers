@@ -1,20 +1,14 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(PlayerBehavior))]
 public class PlayerStats : MonoBehaviour{
 
     public static PlayerStats Instance;
 
     [SerializeField] private Animator anim;
 
-    private PlayerBehavior plBeh;
-
-    //TODO: make private
-    public Gender playerGender = Gender.Male;
-
-    private void Start() {
-        plBeh = GetComponent<PlayerBehavior>();
-    }
+    private PlayerController plCntr;
+    
+    private Gender playerGender = Gender.Male;
 
     public void SwitchGender() {
         playerGender = playerGender.SwitchGender();
@@ -23,11 +17,6 @@ public class PlayerStats : MonoBehaviour{
 
     public Gender GetGender() {
         return playerGender;
-    }
-
-    public void EnablePlayer(bool isEnabled) {
-        if (isEnabled) plBeh.DisableInput();
-        else plBeh.EnableInput();
     }
 
     private void Awake() {

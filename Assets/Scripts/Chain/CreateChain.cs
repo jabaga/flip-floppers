@@ -5,23 +5,23 @@ public class CreateChain : MonoBehaviour {
     
     [SerializeField] private float segmentSize = 0.2f;
     [SerializeField] private GameObject chainPartPrefab;
-    [SerializeField] private Transform waypointContainer;
-    [SerializeField] private GameObject chainPartContainer;
+    [SerializeField] private GameObject chainContainerPrefab;
+    [SerializeField] private Transform waypointContainerObject;
 
     [ContextMenu("MakeChain")]
     private void CreateTheChain() {
-        GameObject par = Instantiate(chainPartContainer, Vector3.zero, Quaternion.identity);
+        GameObject par = Instantiate(chainContainerPrefab, Vector3.zero, Quaternion.identity);
 
-        for (int i = 0; i < waypointContainer.transform.childCount; i++) {
-            int j = (i != waypointContainer.transform.childCount - 1) ? i + 1 : 0;
-            Vector3 childPos1 = waypointContainer.transform.GetChild(i).position;
-            Vector3 childPos2 = waypointContainer.transform.GetChild(j).position;
+        for (int i = 0; i < waypointContainerObject.transform.childCount; i++) {
+            int j = (i != waypointContainerObject.transform.childCount - 1) ? i + 1 : 0;
+            Vector3 childPos1 = waypointContainerObject.transform.GetChild(i).position;
+            Vector3 childPos2 = waypointContainerObject.transform.GetChild(j).position;
             float dist, k, rest;
             int totcnt, cnt;
             
             dist = k = (childPos1 - childPos2).magnitude; //dist between the two positions
 
-            rest = ((dist + 0.1f) % (segmentSize * 2)); //get emply leftover space
+            rest = ((dist + 0.1f) % (segmentSize * 2)); //get empty leftover space
             totcnt = (int) ((dist + 0.1f) / (segmentSize * 2)); //get number of segments
 
             float offset = (rest + segmentSize * 2) / (float)totcnt;
@@ -47,11 +47,11 @@ public class CreateChain : MonoBehaviour {
     }
 
     void OnDrawGizmosSelected() {
-        for (int i = 0; i < waypointContainer.transform.childCount; i++) {
-            int j = (i != waypointContainer.transform.childCount - 1) ? i + 1 : 0;
+        for (int i = 0; i < waypointContainerObject.transform.childCount; i++) {
+            int j = (i != waypointContainerObject.transform.childCount - 1) ? i + 1 : 0;
             Gizmos.color = Color.blue;
-            Vector3 childPos1 = waypointContainer.transform.GetChild(i).position;
-            Vector3 childPos2 = waypointContainer.transform.GetChild(j).position;
+            Vector3 childPos1 = waypointContainerObject.transform.GetChild(i).position;
+            Vector3 childPos2 = waypointContainerObject.transform.GetChild(j).position;
             Vector3 line = childPos2 - childPos1;
             Gizmos.DrawLine(childPos1, childPos2);
             Gizmos.color = Color.red;
