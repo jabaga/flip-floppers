@@ -67,6 +67,9 @@ public class PlayerBehavior : MonoBehaviour
             //other.transform.parent = gameObject.transform;
 
             Destroy(transform.GetComponent<Rigidbody2D>());
+
+            //transform.GetComponent<BoxCollider2D>().enabled = false;
+            transform.GetComponent<BoxCollider2D>().isTrigger = true;
             //RB2D.bodyType = RigidbodyType2D.Static;
             //transform.rotation = Quaternion.Euler(0, 0, 270);
             gameObject.transform.parent = other.transform;

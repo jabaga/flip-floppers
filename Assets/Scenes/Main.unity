@@ -152,21 +152,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 61536616764071602, guid: 535ce3add3e6e2247bc262547e89be97,
-        type: 2}
-      propertyPath: m_Offset.x
-      value: 0.2
+    - target: {fileID: 4893783472461166, guid: 535ce3add3e6e2247bc262547e89be97, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1
       objectReference: {fileID: 0}
-    - target: {fileID: 4582439526862938, guid: 535ce3add3e6e2247bc262547e89be97, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4582439526862938, guid: 535ce3add3e6e2247bc262547e89be97, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.6
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 61536616764071602, guid: 535ce3add3e6e2247bc262547e89be97, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 535ce3add3e6e2247bc262547e89be97, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &290370794
@@ -598,31 +588,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1308497428401862, guid: 535ce3add3e6e2247bc262547e89be97,
     type: 2}
   m_PrefabInternal: {fileID: 213711896}
---- !u!61 &1675322292
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1675322291}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.023559928, y: 0.08638406}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.71, y: 3.5}
-    newSize: {x: 0.25, y: 0.48}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.7519202, y: 2.5733333}
-  m_EdgeRadius: 0
 --- !u!4 &1675322298 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4582439526862938, guid: 535ce3add3e6e2247bc262547e89be97,
@@ -845,6 +810,10 @@ Prefab:
     - target: {fileID: 1622415807843978, guid: 5808c3d9c23af2d44971733318855a9a, type: 2}
       propertyPath: m_TagString
       value: Teleport
+      objectReference: {fileID: 0}
+    - target: {fileID: 1530859705597292, guid: 5808c3d9c23af2d44971733318855a9a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5808c3d9c23af2d44971733318855a9a, type: 2}
