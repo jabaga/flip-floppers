@@ -20,6 +20,7 @@ public class GameStateController : MonoBehaviour {
 
     public void GameOver(bool hasWon) {
         isGameOver = true;
+        //lock player controls
         if (hasWon) StartCoroutine(WinGame());
         else StartCoroutine(LoseGame());
     }
@@ -27,7 +28,7 @@ public class GameStateController : MonoBehaviour {
     private IEnumerator LoseGame() {
         //TODO: animate
         //thePlayer.GetComponent<Animator>().SetTrigger("Die");
-        yield return new WaitForSeconds(2f); //the duration of the death animation
+        yield return new WaitForSeconds(0.01f); //the duration of the death animation
         Destroy(thePlayer);
         LosingUI.SetActive(true);
     }
@@ -35,7 +36,7 @@ public class GameStateController : MonoBehaviour {
     private IEnumerator WinGame() {
         //TODO: animate
         //thePlayer.GetComponent<Animator>().SetTrigger("Won");
-        yield return new WaitForSeconds(2f); //the duration of the win animation
+        yield return new WaitForSeconds(0.01f); //the duration of the win animation
         WinningUI.SetActive(true);
     }
 }
