@@ -6,7 +6,7 @@ public class Blade : MonoBehaviour {
     public bool activeBlade = true;
 
     [SerializeField] private Vector2 movement = new Vector2(1f,0f);
-    [SerializeField, Range(0.01f, 0.5f)] private float speed = 0.01f;
+    [SerializeField, Range(0.001f, 0.02f)] private float speed = 0.01f;
     [SerializeField, Range(0.01f, 0.2f)] private float rigidness = 0.01f;
 
     private Vector2 initPos;
