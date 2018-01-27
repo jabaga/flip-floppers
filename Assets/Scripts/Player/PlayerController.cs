@@ -10,31 +10,52 @@ public class PlayerController : MonoBehaviour {
     private bool flagLeft, flagRight, flagJump, canJump;
     private bool canMove = true;
     private bool onSegment = false;
+
+    private Animator Anim;
     
 	private void Start () {
         rigb = GetComponent<Rigidbody2D>();
+        Anim = GetComponent<Animator>();
 	}
 
     private void Update() {
-        if (canMove) {
+        if (canMove)
+        {
             horizInput = Input.GetAxisRaw("Horizontal");
 
-            if (horizInput > 0) {
+            if (horizInput > 0)
+            {
                 flagRight = true;
-            } else if (horizInput < 0) {
+            } else if (horizInput < 0)
+            {
                 flagLeft = true;
-            } else if (horizInput == 0) {
+            } else if (horizInput == 0)
+            {
                 flagLeft = false;
                 flagRight = false;
             }
             if (canJump && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))) {
                 flagJump = true;
             }
-        } else if (onSegment) {
-            if (Input.GetKeyDown(KeyCode.R)) {
+
+            Debug.Log("HERE");
+
+            if (horizInput != 0 && rigb.velocity.y == 0)
+                Anim.SetTrigger("Moving");
+            else if (horizInput == 0 && rigb.velocity.y == 0)
+                Anim.SetTrigger("Idle");
+            else if (rigb.velocity.y != 0)
+                Anim.SetTrigger("Jumping");
+        }
+        else if (onSegment)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
                 transform.localPosition = new Vector3(-transform.localPosition.x, transform.localPosition.y, 0);
-                transform.localEulerAngles += new Vector3(0,180,0);
+                transform.localEulerAngles += new Vector3(0, 180, 0);
             }
+
+            Anim.SetTrigger("OnSegment");
         }
     }
 
@@ -56,6 +77,7 @@ public class PlayerController : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D coll) {
         if (coll.gameObject.tag == "Ground") {
             canJump = true;
+            canMove = true;
         }
     }
 
