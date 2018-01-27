@@ -121,15 +121,23 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
-    //private void OnTriggerEnter2D(Collider2D coll)
-    //{
-    //    if (coll.tag == "Wheels")
-    //    {
-    //        MB = MovingBehavior.Wheel;
-    //        Debug.Log("On a wheel");
-    //        RB2D.bodyType = RigidbodyType2D.Kinematic;
-    //    }
-    //}
+    private void OnTriggerEnter2D(Collider2D coll)
+    {
+        //if (coll.tag == "Wheels")
+        //{
+        //    MB = MovingBehavior.Wheel;
+        //    Debug.Log("On a wheel");
+        //    RB2D.bodyType = RigidbodyType2D.Kinematic;
+        //}
+
+        if (coll.tag == "Teleport")
+        {
+            transform.parent = null;
+            AddRigidBody();
+
+            MB = MovingBehavior.Standart;
+        }
+    }
 
     //private void OnTriggerExit2D(Collider2D coll)
     //{
@@ -239,7 +247,7 @@ public class PlayerBehavior : MonoBehaviour
 
     public void AddRigidBody()
     {      
-        Rigidbody gameObjectsRigidBody = gameObject.AddComponent<Rigidbody>(); // Add the rigidbody.
+        Rigidbody2D gameObjectsRigidBody = gameObject.AddComponent<Rigidbody2D>(); // Add the rigidbody.
         gameObjectsRigidBody.mass = 3; // Set the GO's mass to 5 via the Rigidbody.
     }
 }
