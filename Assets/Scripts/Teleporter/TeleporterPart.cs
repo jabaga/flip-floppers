@@ -29,6 +29,7 @@ public class TeleporterPart : MonoBehaviour {
         transmissionEffect.gameObject.SetActive(true);
         float moveProgress = 0;
         otherPart.GetComponent<TeleporterPart>().SetReceiving();
+
         PlayerController.Instance.OnTeleportationStart();
 
         while (moveProgress < 1f) {
@@ -36,12 +37,10 @@ public class TeleporterPart : MonoBehaviour {
             transmissionEffect.position = newPos;
             PlayerStats.Instance.transform.position = newPos;
             moveProgress += effectSpeed;
-            yield return new WaitForSeconds(effectSpeed/2);
+            yield return new WaitForSeconds(effectSpeed / 2);
         }
 
-        PlayerController.Instance.GetComponent<Collider2D>().enabled = true;
-        PlayerController.Instance.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-
+        PlayerController.Instance.OnTeleportationEnd();
         transmissionEffect.gameObject.SetActive(false);
     }
 

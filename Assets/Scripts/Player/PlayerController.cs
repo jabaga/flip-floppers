@@ -9,11 +9,11 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] private float speed = 6f;
     [SerializeField] private int jumpForce = 800;
-    [SerializeField] private Transform snapPos;
+    [SerializeField] private float snapOffset = 3.6f;
 
     private Rigidbody2D rigb;
     private float horizInput;
-    private bool flagLeft, flagRight, flagJump, canJump, movingLeft;
+    private bool flagLeft, flagRight, flagJump, canJump, movingLeft, onTeleporter;
 
     private Animator anim;
     private SpriteRenderer sprend;
@@ -50,18 +50,15 @@ public class PlayerController : MonoBehaviour {
                 anim.SetTrigger("Jumping");
             }
         } else if (onSegment) {
-            if (Input.GetKeyDown(KeyCode.R)) {
-                transform.localPosition = new Vector3(-transform.localPosition.x, 0, 0);
-                transform.localEulerAngles += new Vector3(0, 180, 0);
-            }
-            if (Input.GetKeyDown(KeyCode.E)) {
-                anim.SetBool("Moving", true);
-                StopChainMovement(true);
-
-            }
-            if (Input.GetKeyUp(KeyCode.E)) {
+            if (Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.LeftControl) || Input.GetKeyUp(KeyCode.DownArrow)) {
                 anim.SetBool("Moving", false);
                 StopChainMovement(false);
+            } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.DownArrow)) {
+                anim.SetBool("Moving", true);
+                StopChainMovement(true);
+            } else if (!PlayerChainSnapExtra.Instance.tempStop && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))) {
+                transform.localPosition = new Vector3(-transform.localPosition.x, 0, 0);
+                transform.localEulerAngles += new Vector3(0, 180, 0);
             }
 
         }
@@ -71,13 +68,13 @@ public class PlayerController : MonoBehaviour {
         if (toStop) {
             transform.parent = null;
             PlayerChainSnapExtra.Instance.tempStop = true;
-            rigb.bodyType = RigidbodyType2D.Dynamic;
-            rigb.constraints = RigidbodyConstraints2D.FreezeAll;
         } else {
             if (PlayerChainSnapExtra.Instance.GetNewParent() == null) Debug.LogError("No archivedChain");
             else {
                 transform.parent = PlayerChainSnapExtra.Instance.GetNewParent().transform;
-                PlayerChainSnapExtra.Instance.tempStop = true;
+                PlayerChainSnapExtra.Instance.tempStop = false;
+                transform.localPosition = new Vector3(snapOffset, 0, 0);
+                transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
             }
         }
     }
@@ -133,14 +130,14 @@ public class PlayerController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D coll) {
         if (coll.gameObject.tag == "Segment") {
-            if (!onSegment) {
+            if (!onSegment && !onTeleporter) {
                 rigb.velocity = Vector2.zero;
                 rigb.bodyType = RigidbodyType2D.Kinematic;
                 canMove = false;
                 canJump = false;
                 onSegment = true;
                 transform.parent = coll.transform;
-                transform.localPosition = new Vector3(2.8f, 0, 0);
+                transform.localPosition = new Vector3(snapOffset, 0, 0);
                 transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
                 sprend.flipY = coll.GetComponentInParent<ChainMover>().IsReversed();
 
@@ -151,14 +148,23 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void OnTeleportationStart() {
-        anim.SetTrigger("OffSegment");
-        GetComponent<Collider2D>().enabled = false;
-        GetComponent<SpriteRenderer>().flipY = false;
         canMove = false;
+        canJump = false;
+        onSegment = false;
+        onTeleporter = true;
+        PlayerChainSnapExtra.Instance.tempStop = false;
+        GetComponent<Collider2D>().enabled = false;
+        ClearFlags();
+        anim.SetTrigger("OffSegment");
+        anim.SetBool("Moving", false);
+        GetComponent<SpriteRenderer>().flipY = false;
         transform.parent = null;
         transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
-        onSegment = false;
-        PlayerChainSnapExtra.Instance.tempStop = false;
-        ClearFlags();
+    }
+
+    public void OnTeleportationEnd() {
+        onTeleporter = false;
+        GetComponent<Collider2D>().enabled = true;
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
     }
 }
