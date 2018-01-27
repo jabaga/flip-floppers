@@ -46,7 +46,7 @@ public class CreateChain : MonoBehaviour {
         }
     }
 
-    void OnDrawGizmosSelected() {
+    void OnDrawGizmos() {
         for (int i = 0; i < waypointContainerObject.transform.childCount; i++) {
             int j = (i != waypointContainerObject.transform.childCount - 1) ? i + 1 : 0;
             Gizmos.color = Color.blue;

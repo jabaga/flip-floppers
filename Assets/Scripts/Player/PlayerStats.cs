@@ -14,6 +14,8 @@ public class PlayerStats : MonoBehaviour{
             return;
 
         playerGender = playerGender.SwitchGender();
+        int gn = (playerGender == Gender.Female) ? 2 : 1;
+        PlayerController.Instance.SetActiveCollider(gn);
 
         genderSwitchParticle.Play();
 
