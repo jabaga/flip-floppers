@@ -38,6 +38,14 @@ public class Blade : MonoBehaviour {
         }
     }
 
+    private void FixedUpdate()
+    {
+        Vector3 rotation = transform.rotation.eulerAngles;
+            rotation.z -= 10;
+
+        transform.rotation = Quaternion.Euler(rotation);
+    }
+
     private void OnDisable() {
         StopAllCoroutines();
     }
