@@ -3,16 +3,21 @@
 public class PlayerStats : MonoBehaviour{
 
     public static PlayerStats Instance;
-
-    [SerializeField] private Animator anim;
+    public ParticleSystem genderSwitchParticle;
 
     private PlayerController plCntr;
     
     private Gender playerGender = Gender.Male;
 
-    public void SwitchGender() {
+    public void SwitchGender(Gender gender) {
+        if(gender == playerGender)
+            return;
+
         playerGender = playerGender.SwitchGender();
-        //TODO: Play animation for transformation
+
+        genderSwitchParticle.Play();
+
+        GetComponent<Animator>().SetBool("Female", playerGender == Gender.Female);
     }
 
     public Gender GetGender() {
