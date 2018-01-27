@@ -34,3 +34,16 @@ public class GameManager : MonoBehaviour {
         }
     }
 }
+
+[System.Flags]
+public enum Gender {
+    Male = (1<<0), Female = (1 << 1)
+}
+
+public static class EnumExtensions {
+    public static Gender SwitchGender (this Gender type) {
+        if (type == Gender.Male) return Gender.Female;
+        else return Gender.Male;
+    }
+}
+

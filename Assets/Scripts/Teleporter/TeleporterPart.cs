@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TeleporterPart : MonoBehaviour {
 
-    [SerializeField] private bool isForMale;
+    [SerializeField] private Gender teporterGender = Gender.Male;
     [SerializeField] private float effectSpeed = 0.02f;
     [Space(10)]
     [SerializeField] private Transform otherPart;
@@ -37,8 +37,8 @@ public class TeleporterPart : MonoBehaviour {
         //TODO: unlock player controls
     }
 
-    public void SetAccess(bool isMale) {
-        isForMale = isMale;
+    public void SetAccess(Gender newGender) {
+        teporterGender = newGender;
     }
 
     public void SetReceiving() {
@@ -47,7 +47,6 @@ public class TeleporterPart : MonoBehaviour {
 
     [ContextMenu("Activate")]
     private void Activate() {
-        //player mode == isForMale
         Debug.Log("Called");
         if (true) StartCoroutine(Transfer());
     }
@@ -59,7 +58,7 @@ public class TeleporterPart : MonoBehaviour {
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        if (other.tag == "Player") {
+        if (other.tag == "Player" && teporterGender == PlayerStats.Instance.GetGender()) {
             isReceiving = false;
         }
     }
