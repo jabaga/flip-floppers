@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour {
 
     public static PlayerController Instance;
 
@@ -22,29 +21,22 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private SpriteRenderer sprend;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
+    private void Awake() {
+        if (Instance == null) {
             Instance = this;
-        }
-        else if (Instance != this)
-        {
+        } else if (Instance != this) {
             Destroy(gameObject);
         }
     }
 
-    public void SetActiveCollider(int coll)
-    {
-        for (int i = 0; i < colls.Count; i++)
-        {
+    public void SetActiveCollider(int coll) {
+        for (int i = 0; i < colls.Count; i++) {
             colls[i].enabled = (i == coll);
         }
     }
 
 
-    private void Start()
-    {
+    private void Start() {
         rigb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprend = GetComponent<SpriteRenderer>();
@@ -54,49 +46,34 @@ public class PlayerController : MonoBehaviour
         SetActiveCollider(0);
     }
 
-    private void Update()
-    {
+    private void Update() {
         if (!isAlive) {
             return;
         }
 
-        if (canMove)
-        {
+        if (canMove) {
             horizInput = Input.GetAxisRaw("Horizontal");
 
-            if (horizInput > 0)
-            {
+            if (horizInput > 0) {
                 flagRight = true;
-            }
-            else if (horizInput < 0)
-            {
+            } else if (horizInput < 0) {
                 flagLeft = true;
-            }
-            else if (horizInput == 0)
-            {
+            } else if (horizInput == 0) {
                 flagLeft = false;
                 flagRight = false;
             }
-            if (canJump && (Input.GetKeyDown(KeyCode.W)))
-            {
+            if (canJump && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))) {
                 flagJump = true;
                 anim.SetTrigger("Jumping");
             }
-        }
-        else if (onSegment)
-        {
-            if (Input.GetKeyUp(KeyCode.S))
-            {
+        } else if (onSegment) {
+            if (Input.GetKeyUp(KeyCode.S)) {
                 anim.SetBool("Moving", false);
                 StopChainMovement(false);
-            }
-            else if (Input.GetKeyDown(KeyCode.S))
-            {
+            } else if (Input.GetKeyDown(KeyCode.S)) {
                 anim.SetBool("Moving", true);
                 StopChainMovement(true);
-            }
-            else if (!PlayerChainSnapExtra.Instance.tempStop && (Input.GetKeyDown(KeyCode.W)))
-            {
+            } else if (!PlayerChainSnapExtra.Instance.tempStop && (Input.GetKeyDown(KeyCode.W))) {
                 isMirrored = !isMirrored;
                 transform.localPosition = new Vector3(-transform.localPosition.x, 0, 0);
                 transform.localEulerAngles += new Vector3(0, 180, 0);
@@ -109,18 +86,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void StopChainMovement(bool toStop)
-    {
-        if (toStop)
-        {
+    private void StopChainMovement(bool toStop) {
+        if (toStop) {
             transform.parent = null;
             PlayerChainSnapExtra.Instance.tempStop = true;
-        }
-        else
-        {
+        } else {
             if (PlayerChainSnapExtra.Instance.GetNewParent() == null) Debug.LogError("No archivedChain");
-            else
-            {
+            else {
                 transform.parent = PlayerChainSnapExtra.Instance.GetNewParent().transform;
                 PlayerChainSnapExtra.Instance.tempStop = false;
                 if (!isMirrored) {
@@ -135,74 +107,57 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void ClearFlags()
-    {
+    public void ClearFlags() {
         flagRight = false;
         flagLeft = false;
         flagJump = false;
     }
 
-    private void FixedUpdate()
-    {
-        if (!onSegment)
-        {
-            if (flagRight)
-            {
+    private void FixedUpdate() {
+        if (!onSegment) {
+            if (flagRight) {
                 rigb.velocity = new Vector2(speed, rigb.velocity.y);
                 movingLeft = false;
                 anim.SetBool("Moving", true);
-            }
-            else if (flagLeft)
-            {
+            } else if (flagLeft) {
                 rigb.velocity = new Vector2(-speed, rigb.velocity.y);
                 movingLeft = true;
                 anim.SetBool("Moving", true);
-            }
-            else
-            {
+            } else {
                 rigb.velocity = new Vector2(0, rigb.velocity.y);
                 movingLeft = false;
                 anim.SetBool("Moving", false);
             }
 
-            if (movingLeft != sprend.flipX)
-            {
+            if (movingLeft != sprend.flipX) {
                 sprend.flipX = movingLeft;
             }
 
-            if (flagJump)
-            {
+            if (flagJump) {
                 rigb.velocity = Vector2.zero;
                 rigb.AddForce(new Vector2(0f, jumpForce));
             }
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D coll)
-    {
-        if (coll.gameObject.tag == "Ground")
-        {
+    private void OnCollisionEnter2D(Collision2D coll) {
+        if (coll.gameObject.tag == "Ground") {
             canJump = true;
             canMove = true;
             anim.SetBool("OnSegment", false);
         }
     }
 
-    private void OnCollisionExit2D(Collision2D coll)
-    {
-        if (coll.gameObject.tag == "Ground")
-        {
+    private void OnCollisionExit2D(Collision2D coll) {
+        if (coll.gameObject.tag == "Ground") {
             canJump = false;
             flagJump = false;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D coll)
-    {
-        if (coll.gameObject.tag == "Segment")
-        {
-            if (!onSegment && !onTeleporter)
-            {
+    private void OnTriggerEnter2D(Collider2D coll) {
+        if (coll.gameObject.tag == "Segment") {
+            if (!onSegment && !onTeleporter) {
                 rigb.velocity = Vector2.zero;
                 rigb.bodyType = RigidbodyType2D.Kinematic;
                 canMove = false;
@@ -221,8 +176,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnTeleportationStart()
-    {
+    public void OnTeleportationStart() {
         canMove = false;
         canJump = false;
         onSegment = false;
@@ -237,11 +191,10 @@ public class PlayerController : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
 
         SetActiveCollider(-1);
-        
+
     }
 
-    public void OnTeleportationEnd()
-    {
+    public void OnTeleportationEnd() {
         onTeleporter = false;
         SetActiveCollider(0);
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
