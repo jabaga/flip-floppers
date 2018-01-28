@@ -9,9 +9,6 @@ public class BodyPartsSpawner : MonoBehaviour {
         {
             transform.GetChild(i).gameObject.SetActive(false);
         }
-
-        SpawnParts();
-
     }
 	
 	public void SpawnParts()
