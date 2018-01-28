@@ -71,6 +71,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DieSound: {fileID: 8300000, guid: e18807d3657014547b68b8dc86bea890, type: 3}
   FailSound: {fileID: 8300000, guid: 2c878b5bbfb051747b924681b7f3a8dd, type: 3}
+  ParticleDieEffect: {fileID: 1590750708437204, guid: f58c0ea51dfe645488a19975445745a7,
+    type: 2}
 --- !u!114 &114779548214088700
 MonoBehaviour:
   m_ObjectHideFlags: 1
