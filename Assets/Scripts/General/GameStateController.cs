@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Com.LuisPedroFonseca.ProCamera2D;
 
 public class GameStateController : MonoBehaviour {
     public static GameStateController Instance;
@@ -8,6 +9,7 @@ public class GameStateController : MonoBehaviour {
 
     [SerializeField] private GameObject LosingUI;
     [SerializeField] private GameObject WinningUI;
+    [SerializeField] private ProCamera2D procam;
 
     private void Awake() {
         if (Instance == null) {
@@ -20,6 +22,7 @@ public class GameStateController : MonoBehaviour {
     public void GameOver(bool hasWon) {
         isGameOver = true;
         PlayerController.Instance.canMove = false;
+        procam.enabled = false;
         if (hasWon) StartCoroutine(WinGame());
         else StartCoroutine(LoseGame());
     }
