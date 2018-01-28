@@ -184,7 +184,7 @@ public class PlayerController : MonoBehaviour
         {
             canJump = true;
             canMove = true;
-            anim.SetTrigger("OffSegment");
+            anim.SetBool("OnSegment", false);
         }
     }
 
@@ -213,7 +213,7 @@ public class PlayerController : MonoBehaviour
                 transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
                 sprend.flipY = coll.GetComponentInParent<ChainMover>().IsReversed();
 
-                anim.SetTrigger("OnSegment");
+                anim.SetBool("OnSegment", true);
                 anim.SetBool("Moving", false);
 
                 SetActiveCollider(1);
@@ -230,7 +230,7 @@ public class PlayerController : MonoBehaviour
         onTeleporter = true;
         PlayerChainSnapExtra.Instance.tempStop = false;
         ClearFlags();
-        anim.SetTrigger("OffSegment");
+        anim.SetBool("OnSegment", false);
         anim.SetBool("Moving", false);
         GetComponent<SpriteRenderer>().flipY = false;
         transform.parent = null;
