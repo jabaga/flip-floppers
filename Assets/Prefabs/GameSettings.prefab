@@ -52,10 +52,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcbe16c8207c39e4088b2133ed3fd632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thePlayer: {fileID: 0}
   isGameOver: 0
   LosingUI: {fileID: 0}
   WinningUI: {fileID: 0}
+  procam: {fileID: 0}
+  DieSound: {fileID: 8300000, guid: e18807d3657014547b68b8dc86bea890, type: 3}
+  FailSound: {fileID: 8300000, guid: 2c878b5bbfb051747b924681b7f3a8dd, type: 3}
+  ParticleDieEffect: {fileID: 1590750708437204, guid: f58c0ea51dfe645488a19975445745a7,
+    type: 2}
 --- !u!114 &114628030175579848
 MonoBehaviour:
   m_ObjectHideFlags: 1
