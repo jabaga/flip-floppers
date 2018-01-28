@@ -67971,6 +67971,7 @@ GameObject:
   - component: {fileID: 1714231115}
   - component: {fileID: 1714231119}
   - component: {fileID: 1714231120}
+  - component: {fileID: 1714231121}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -68095,6 +68096,23 @@ MonoBehaviour:
   RightFocus: 0.25
   TopFocus: 0.001
   BottomFocus: 0.001
+--- !u!114 &1714231121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1714231114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ac0ec3d6ad5f4a3d9d184bc3773a3a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pc2D: {fileID: 1714231119}
+  ShakePresets:
+  - {fileID: 11400000, guid: 6c47cdba9ce634971ba9d84eb91de2d4, type: 2}
+  ConstantShakePresets: []
+  StartConstantShakePreset: {fileID: 0}
+  CurrentConstantShakePreset: {fileID: 0}
 --- !u!1 &1716927808
 GameObject:
   m_ObjectHideFlags: 0
@@ -85245,7 +85263,7 @@ MonoBehaviour:
   isGameOver: 0
   LosingUI: {fileID: 1145019606}
   WinningUI: {fileID: 388033402}
-  procam: {fileID: 0}
+  procam: {fileID: 1714231119}
 --- !u!114 &2080512446
 MonoBehaviour:
   m_ObjectHideFlags: 0
