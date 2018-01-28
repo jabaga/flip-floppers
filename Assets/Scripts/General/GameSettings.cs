@@ -15,4 +15,13 @@ public class GameSettings : MonoBehaviour {
             Destroy(gameObject);
         }
     }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Alpha9)) {
+            GameManager.Instance.OpenScene("Tutorial");
+        }
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            GameManager.Instance.Quit();
+        }
+    }
 }
