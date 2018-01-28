@@ -86972,6 +86972,6 @@ MonoBehaviour:
     yourself on a chain by pressing \"S\".\\nTime your movement to evade the blades.\r\nCollecting
     an identifier token changes your gender.\r\nYou can only pass through blue portals
     if you identify as \"male\"\\nand you can only use red portals if you identify
-    as \"female\"."
+    as \"female\".\r\nReach the contract to become a certified trans."
   textContainer: {fileID: 2030858756}
   tutText: {fileID: 1895410289}
