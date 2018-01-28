@@ -9,16 +9,9 @@ public class GenderSwitcher : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "Player") {
-            other.GetComponent<PlayerStats>().SwitchGender(gender);
+            AudioClip ac = (gender == Gender.Male) ? MaleChangeSound : FemaleChangeSound;
 
-            if (gender == Gender.Female)
-            {
-                AudioManager.instance.RandomizeMiscSfx(FemaleChangeSound);
-            }
-            else if(gender == Gender.Male)
-            {
-                AudioManager.instance.RandomizeMiscSfx(MaleChangeSound);
-            }
+            other.GetComponent<PlayerStats>().SwitchGender(gender, ac);
         }
     }
 }

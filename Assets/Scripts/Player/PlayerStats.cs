@@ -9,7 +9,7 @@ public class PlayerStats : MonoBehaviour{
     
     private Gender playerGender = Gender.Male;
 
-    public void SwitchGender(Gender gender) {
+    public void SwitchGender(Gender gender, AudioClip sound) {
         if(gender == playerGender)
             return;
 
