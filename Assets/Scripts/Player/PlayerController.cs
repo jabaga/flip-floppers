@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
                 flagLeft = false;
                 flagRight = false;
             }
-            if (canJump && (Input.GetKeyDown(KeyCode.W)))
+            if (canJump && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)))
             {
                 flagJump = true;
                 anim.SetTrigger("Jumping");
@@ -184,7 +184,7 @@ public class PlayerController : MonoBehaviour
         {
             canJump = true;
             canMove = true;
-            anim.SetBool("OnSegment", false);
+            anim.SetTrigger("OffSegment");
         }
     }
 
@@ -213,7 +213,7 @@ public class PlayerController : MonoBehaviour
                 transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
                 sprend.flipY = coll.GetComponentInParent<ChainMover>().IsReversed();
 
-                anim.SetBool("OnSegment", true);
+                anim.SetTrigger("OnSegment");
                 anim.SetBool("Moving", false);
 
                 SetActiveCollider(1);
@@ -230,7 +230,7 @@ public class PlayerController : MonoBehaviour
         onTeleporter = true;
         PlayerChainSnapExtra.Instance.tempStop = false;
         ClearFlags();
-        anim.SetBool("OnSegment", false);
+        anim.SetTrigger("OffSegment");
         anim.SetBool("Moving", false);
         GetComponent<SpriteRenderer>().flipY = false;
         transform.parent = null;
