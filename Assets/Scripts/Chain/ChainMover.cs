@@ -5,7 +5,7 @@ using UnityEngine;
 public class ChainMover : MonoBehaviour {
     public bool isActive = true;
 
-    [SerializeField, Range(0.5f, 0.5f)] private float chainSpeed = 0.1f;
+    [SerializeField, Range(0.1f, 0.4f)] private float chainSpeed = 0.1f;
     [SerializeField] private bool reverse = false;
     [SerializeField, Range(0.01f, 0.5f)] private float chainMoveDelay = 0.01f;
     [Space(10), SerializeField] private List<Transform> segments = new List<Transform>();

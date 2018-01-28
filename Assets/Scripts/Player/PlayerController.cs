@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rigb;
     private float horizInput;
-    private bool flagLeft, flagRight, flagJump, canJump, movingLeft, onTeleporter, isAlive;
+    private bool flagLeft, flagRight, flagJump, canJump, movingLeft, onTeleporter, isAlive, isMirrored;
 
     private Animator anim;
     private SpriteRenderer sprend;
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
                 flagLeft = false;
                 flagRight = false;
             }
-            if (canJump && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)))
+            if (canJump && (Input.GetKeyDown(KeyCode.W)))
             {
                 flagJump = true;
                 anim.SetTrigger("Jumping");
@@ -85,18 +85,19 @@ public class PlayerController : MonoBehaviour
         }
         else if (onSegment)
         {
-            if (Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.LeftControl) || Input.GetKeyUp(KeyCode.DownArrow))
+            if (Input.GetKeyUp(KeyCode.S))
             {
                 anim.SetBool("Moving", false);
                 StopChainMovement(false);
             }
-            else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.DownArrow))
+            else if (Input.GetKeyDown(KeyCode.S))
             {
                 anim.SetBool("Moving", true);
                 StopChainMovement(true);
             }
-            else if (!PlayerChainSnapExtra.Instance.tempStop && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)))
+            else if (!PlayerChainSnapExtra.Instance.tempStop && (Input.GetKeyDown(KeyCode.W)))
             {
+                isMirrored = !isMirrored;
                 transform.localPosition = new Vector3(-transform.localPosition.x, 0, 0);
                 transform.localEulerAngles += new Vector3(0, 180, 0);
             }
@@ -122,8 +123,13 @@ public class PlayerController : MonoBehaviour
             {
                 transform.parent = PlayerChainSnapExtra.Instance.GetNewParent().transform;
                 PlayerChainSnapExtra.Instance.tempStop = false;
-                transform.localPosition = new Vector3(snapOffset, 0, 0);
-                transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
+                if (!isMirrored) {
+                    transform.localPosition = new Vector3(snapOffset, 0, 0);
+                    transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
+                } else {
+                    transform.localPosition = new Vector3(-snapOffset, 0, 0);
+                    transform.localRotation = Quaternion.Euler(0f, 180f, 180f);
+                }
             }
         }
     }
@@ -220,6 +226,7 @@ public class PlayerController : MonoBehaviour
         canMove = false;
         canJump = false;
         onSegment = false;
+        isMirrored = false;
         onTeleporter = true;
         PlayerChainSnapExtra.Instance.tempStop = false;
         ClearFlags();
