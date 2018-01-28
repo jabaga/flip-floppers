@@ -36,9 +36,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1106631209178562}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.8106105, y: 0.6337192, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 23.1, y: 7.55, z: 0.57421875}
+  m_LocalScale: {x: 0.59999996, y: 0.59999996, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -69,6 +69,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c44fc0be0c3ac414ca53aaf6fadfc655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DieSound: {fileID: 8300000, guid: e18807d3657014547b68b8dc86bea890, type: 3}
+  FailSound: {fileID: 8300000, guid: 2c878b5bbfb051747b924681b7f3a8dd, type: 3}
 --- !u!114 &114718893158831286
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53ebaaf6d3a7d644aa4e992164e4890d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reverse: 0
+  reverse: 1
   speed: 10
 --- !u!212 &212432535586869722
 SpriteRenderer:

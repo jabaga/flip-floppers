@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1931261313643024}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25.24, y: 1.3, z: 0.57421875}
+  m_LocalPosition: {x: -3.897, y: -3.279, z: 0.296875}
   m_LocalScale: {x: 0.59999996, y: 0.59999996, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -57,7 +57,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.31
+  m_Radius: 1.12
 --- !u!114 &114391323390971402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -69,8 +69,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53ebaaf6d3a7d644aa4e992164e4890d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reverse: 0
-  speed: 10
+  reverse: 1
+  speed: 16
 --- !u!114 &114903727095883954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -82,6 +82,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c44fc0be0c3ac414ca53aaf6fadfc655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DieSound: {fileID: 8300000, guid: e18807d3657014547b68b8dc86bea890, type: 3}
+  FailSound: {fileID: 8300000, guid: 2c878b5bbfb051747b924681b7f3a8dd, type: 3}
 --- !u!212 &212015540714805484
 SpriteRenderer:
   m_ObjectHideFlags: 1

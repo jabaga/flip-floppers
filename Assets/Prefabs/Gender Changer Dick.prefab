@@ -46,7 +46,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1914808731505160
 GameObject:
   m_ObjectHideFlags: 0
@@ -84,7 +84,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1883239310953644}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.761646, y: -1.643066, z: 0}
+  m_LocalPosition: {x: 2.84, y: -4.88, z: 0}
   m_LocalScale: {x: 0.45, y: 0.35, z: 1}
   m_Children:
   - {fileID: 4898463614856236}
@@ -142,6 +142,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gender: 1
+  FemaleChangeSound: {fileID: 8300000, guid: fe4edb193ccdc5940be510e752b5ff00, type: 3}
+  MaleChangeSound: {fileID: 8300000, guid: cfb2267e5bbfa804b91b86f0ef23ff79, type: 3}
 --- !u!198 &198375184255436214
 ParticleSystem:
   m_ObjectHideFlags: 1
