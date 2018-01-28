@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using AudioHelper;
 
 public class PlayerStats : MonoBehaviour{
 
@@ -18,6 +19,8 @@ public class PlayerStats : MonoBehaviour{
         PlayerController.Instance.SetActiveCollider(gn);
 
         genderSwitchParticle.Play();
+
+        AudioManager.instance.RandomizeMiscSfx(sound);
 
         GetComponent<Animator>().SetBool("Female", playerGender == Gender.Female);
     }
