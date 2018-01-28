@@ -7675,6 +7675,10 @@ Prefab:
       propertyPath: colls.Array.data[2]
       value: 
       objectReference: {fileID: 1675322293}
+    - target: {fileID: 1284584317408666, guid: 535ce3add3e6e2247bc262547e89be97, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 535ce3add3e6e2247bc262547e89be97, type: 2}
   m_IsPrefabParent: 0
@@ -26036,6 +26040,11 @@ Prefab:
       propertyPath: procam
       value: 
       objectReference: {fileID: 1714231119}
+    - target: {fileID: 114299924794969898, guid: 24573a0a789e1c34ea008fb4fe483d7e,
+        type: 2}
+      propertyPath: bodyPartsSpawner
+      value: 
+      objectReference: {fileID: 1263298945}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 24573a0a789e1c34ea008fb4fe483d7e, type: 2}
   m_IsPrefabParent: 0
@@ -52696,6 +52705,12 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!114 &1263298945 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114009699251238734, guid: 535ce3add3e6e2247bc262547e89be97,
+    type: 2}
+  m_PrefabInternal: {fileID: 213711896}
+  m_Script: {fileID: 11500000, guid: aee885d00e6b48c49bcdeef0f3c9ee76, type: 3}
 --- !u!1 &1266096682
 GameObject:
   m_ObjectHideFlags: 0

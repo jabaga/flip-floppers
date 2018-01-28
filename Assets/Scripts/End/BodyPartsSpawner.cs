@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BodyPartsSpawner : MonoBehaviour {
     
@@ -9,6 +7,7 @@ public class BodyPartsSpawner : MonoBehaviour {
         {
             transform.GetChild(i).gameObject.SetActive(false);
         }
+        transform.parent = null;
     }
 	
 	public void SpawnParts()

@@ -31,8 +31,8 @@ public class GameStateController : MonoBehaviour {
             isGameOver = true;
             PlayerController.Instance.canMove = false;
             procam.enabled = false;
+            bodyPartsSpawner.gameObject.transform.position = PlayerController.Instance.transform.position;
             bodyPartsSpawner.SpawnParts();
-            bodyPartsSpawner.gameObject.transform.SetParent(null);
             if (hasWon) StartCoroutine(WinGame());
             else StartCoroutine(LoseGame());
         }
