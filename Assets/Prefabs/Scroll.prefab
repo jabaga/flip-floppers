@@ -116,7 +116,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1847846903649800}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 57.85, y: -4.1423078, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children:
   - {fileID: 4435148122712640}
@@ -181,7 +181,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EndCanvas: {fileID: 0}
   EndSound: {fileID: 8300000, guid: 0a8e95075f9b456408638fbb538cea8d, type: 3}
-  Player: {fileID: 0}
 --- !u!198 &198082127269124244
 ParticleSystem:
   m_ObjectHideFlags: 1
