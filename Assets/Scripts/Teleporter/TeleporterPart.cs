@@ -18,6 +18,7 @@ public class TeleporterPart : MonoBehaviour {
         teleporterPartEffect = GetComponent<ParticleSystem>();
         particleTransmission = transmissionEffect.GetComponent<ParticleSystem>();
         SetColor();
+        particleTransmission.Stop();
         teleporterPartEffect.Play();
     }
 

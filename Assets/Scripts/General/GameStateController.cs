@@ -28,16 +28,12 @@ public class GameStateController : MonoBehaviour {
     }
 
     private IEnumerator LoseGame() {
-        //TODO: animate
-        //PlayerController.Instance.GetComponent<Animator>().SetTrigger("Die");
         yield return new WaitForSeconds(0.01f); //the duration of the death animation
         Destroy(PlayerController.Instance.gameObject);
         LosingUI.SetActive(true);
     }
 
     private IEnumerator WinGame() {
-        //TODO: animate
-        //thePlayer.GetComponent<Animator>().SetTrigger("Won");
         yield return new WaitForSeconds(0.01f); //the duration of the win animation
         WinningUI.SetActive(true);
     }
