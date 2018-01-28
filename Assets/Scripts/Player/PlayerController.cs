@@ -11,12 +11,13 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float speed = 6f;
     [SerializeField] private int jumpForce = 800;
-    [SerializeField] private float snapOffset = 3.6f;
+    [SerializeField] private float snapOffset = 5.4f;
+    [SerializeField] private float dieIfUnder = -30f;
     [SerializeField] private List<Collider2D> colls;
 
     private Rigidbody2D rigb;
     private float horizInput;
-    private bool flagLeft, flagRight, flagJump, canJump, movingLeft, onTeleporter;
+    private bool flagLeft, flagRight, flagJump, canJump, movingLeft, onTeleporter, isAlive;
 
     private Animator anim;
     private SpriteRenderer sprend;
@@ -48,12 +49,17 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         sprend = GetComponent<SpriteRenderer>();
         sprend.flipY = false;
+        isAlive = true;
 
         SetActiveCollider(0);
     }
 
     private void Update()
     {
+        if (!isAlive) {
+            return;
+        }
+
         if (canMove)
         {
             horizInput = Input.GetAxisRaw("Horizontal");
@@ -95,6 +101,10 @@ public class PlayerController : MonoBehaviour
                 transform.localEulerAngles += new Vector3(0, 180, 0);
             }
 
+        }
+
+        if (transform.position.y < dieIfUnder) {
+            GameStateController.Instance.GameOver(false);
         }
     }
 
