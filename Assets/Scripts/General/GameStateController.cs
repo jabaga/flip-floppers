@@ -10,7 +10,6 @@ public class GameStateController : MonoBehaviour {
     public BodyPartsSpawner bodyPartsSpawner;
 
     [SerializeField] private GameObject LosingUI;
-    [SerializeField] private GameObject WinningUI;
     [SerializeField] private ProCamera2D procam;
 
     [Space(10), SerializeField] private AudioClip DieSound;
@@ -33,8 +32,7 @@ public class GameStateController : MonoBehaviour {
             procam.enabled = false;
             bodyPartsSpawner.gameObject.transform.position = PlayerController.Instance.transform.position;
             bodyPartsSpawner.SpawnParts();
-            if (hasWon) StartCoroutine(WinGame());
-            else StartCoroutine(LoseGame());
+            if (!hasWon) StartCoroutine(LoseGame());
         }
     }
 
@@ -47,11 +45,5 @@ public class GameStateController : MonoBehaviour {
         yield return new WaitForSeconds(2f);
         LosingUI.SetActive(true);
         AudioManager.instance.RandomizeMiscSfx(FailSound);
-    }
-
-    private IEnumerator WinGame() {
-
-        yield return new WaitForSeconds(0.01f); //the duration of the win animation
-        WinningUI.SetActive(true);
     }
 }
