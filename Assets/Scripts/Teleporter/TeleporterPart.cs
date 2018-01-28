@@ -8,6 +8,7 @@ public class TeleporterPart : MonoBehaviour {
     [Space(10)]
     [SerializeField] private Transform otherPart;
     [SerializeField] private Transform transmissionEffect;
+    private ParticleSystem particleTransmission;
 
     private bool isReceiving;
     private ParticleSystem teleporterPartEffect;
@@ -15,6 +16,7 @@ public class TeleporterPart : MonoBehaviour {
     private void Start() {
         isReceiving = false;
         teleporterPartEffect = GetComponent<ParticleSystem>();
+        particleTransmission = transmissionEffect.GetComponent<ParticleSystem>();
         SetColor();
         teleporterPartEffect.Play();
     }
@@ -26,7 +28,7 @@ public class TeleporterPart : MonoBehaviour {
 
     private IEnumerator Transfer() {
         transmissionEffect.position = transform.position;
-        transmissionEffect.gameObject.SetActive(true);
+        particleTransmission.Play();
         float moveProgress = 0;
         otherPart.GetComponent<TeleporterPart>().SetReceiving();
 
@@ -41,7 +43,7 @@ public class TeleporterPart : MonoBehaviour {
         }
 
         PlayerController.Instance.OnTeleportationEnd();
-        transmissionEffect.gameObject.SetActive(false);
+        particleTransmission.Stop();
     }
 
     public void SetAccess(Gender newGender) {
