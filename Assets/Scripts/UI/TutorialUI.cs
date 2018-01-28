@@ -46,7 +46,7 @@ public class TutorialUI : MonoBehaviour {
     }
 
     public void Update() {
-        if (isStopped && Input.GetKeyDown(KeyCode.Space)) {
+        if (isStopped && Input.GetKeyDown(KeyCode.KeypadEnter)) {
             isStopped = false;
             Time.timeScale = 1;
             HideText();
